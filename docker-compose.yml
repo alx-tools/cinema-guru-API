@@ -1,0 +1,26 @@
+version: '3'
+services:
+  node:
+    restart: always
+    build: .
+    environment:
+      DB_SCHEMA: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: postgres
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/code
+    depends_on: ["postgres"]
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports: 
+      - '5432:5432'
+    volumes:
+      - node-db:/var/lib/postgresql/data
+volumes:
+ node-db:
